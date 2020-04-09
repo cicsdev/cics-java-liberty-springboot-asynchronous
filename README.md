@@ -1,4 +1,4 @@
-# cics-java-liberty-springboot-jcics
+# cics-java-liberty-springboot-asynchronous
 
 This sample project demonstrates a Spring Boot with Asynchronous that can be deployed to an IBM CICS Liberty JVM server. 
 
