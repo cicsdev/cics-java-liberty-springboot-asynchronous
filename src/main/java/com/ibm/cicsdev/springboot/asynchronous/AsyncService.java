@@ -26,6 +26,14 @@ import org.springframework.stereotype.Service;
 
 import com.ibm.cics.server.TSQ;
 
+/**
+ * 
+ * This class uses the annotation @Async() on the application level for those which you want it execution to be in a separate thread. 
+ * 
+ * Two methods executeAsync1() and executeAsync2() can run in separate threads.
+ * 
+ */
+
 @Service
 @Async("ConTaskExecutor")
 public class AsyncService {

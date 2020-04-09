@@ -20,6 +20,12 @@ package com.ibm.cicsdev.springboot.asynchronous;
 
 import java.lang.reflect.Method;
 
+/**
+ * 
+ * This class implements the AsyncUncaughtExceptionHandler method. 
+ * 
+ */
+
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 
 public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {

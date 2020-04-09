@@ -24,6 +24,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * This class is to write a Rest Endpoint and use the AsyncService class to run two separate tasks.
+ * 
+ * @RestController: build a Restful controller
+ * @Autowired: drive Dependency Injection
+ * @RequestMapping: write a Request URI method
+ */
+
 @RestController
 public class SpringCICSAsynController {
 
