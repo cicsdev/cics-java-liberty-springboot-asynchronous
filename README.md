@@ -4,7 +4,7 @@ This sample project demonstrates a Spring Boot with Asynchronous that can be dep
 
 ## Prerequisites
 
-  - CICS TS V5.5 or later
+  - CICS TS V5.3 or later
   - A configured Liberty JVM server 
   - Java SE 1.8 or later on the z/OS system
   - Java SE 1.8 or later on the workstation
