@@ -14,7 +14,9 @@ This sample project demonstrates a Spring Boot application running asynchronous 
 
 You can choose to build the project using Gradle or Maven. The project includes both Gradle and Maven wrappers, these wrappers will automatically download required components from your chosen build tool; if not already present on your workstation.
 
-You can build the sample project through plug-in tooling of your chosen IDE. Both Gradle *buildship* and Maven *m2e* will integrate with Eclipse's "Run As..." capability allowing you to specify the required build-tasks. There are typically `clean bootWar` for Gradle and `clean package` for Maven, as reflected in the command line approach below.
+You can also build the sample project through plug-in tooling of your chosen IDE. Both Gradle *buildship* and Maven *m2e* will integrate with Eclipse's "Run As..." capability allowing you to specify the required build-tasks. There are typically `clean bootWar` for Gradle and `clean package` for Maven, as reflected in the command line approach shown later.
+
+**Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
 
 **Note:** If you import the project to an IDE of your choice, you might experience local project compile errors. To resolve these errors you should refresh your IDEs configuration. For example, in Eclipse: for Gradle, right-click on "Project", select "Gradle -> Refresh Gradle Project", or for Maven, right-click on "Project", select "Maven -> Update Project...".
 
@@ -57,28 +59,28 @@ This creates a WAR file inside the `target` directory.
 
 ## Deploying
 
-1. Ensure you have the following features in `server.xml`:
+1. Ensure you have the following features in `server.xml`:           
+    - *servlet-3.1* or *servlet-4.0*
+    - *concurrent-1.0*
+    - *cicsts:security-1.0*
+                
+2. Copy and paste the WAR from your *target* or *build/libs* directory into a CICS bundle project and create a new WARbundlepart for that WAR file. 
 
-    - servlet-3.1 or servlet-4.0
-    - concurrent-1.0 
-    - cicsts:security-1.0 
-        
-   Notes: With servlet-3.1 and WAR file Tomcat must be exluded, for JAR file it doesn't matter, and for servlet-4.0 it doesn't matter.
+3. Deploy the CICS bundle project as normal. For example in Eclipse, select "Export Bundle Project to z/OS UNIX File System".
 
-2. Copy and paste the WAR from your target or build/libs directory into a CICS bundle project and create a new WARbundlepart for that WAR file. Deploy the CICS bundle project as normal. For example in Eclipse, select "Export Bundle Project to z/OS UNIX File System". 
+4. Optionally, manually upload the WAR file to zFS and add an `<application>` configuration to server.xml:
 
-   Notes: You also can add the application configuration to server.xml
-
-   Here's an example of configuration needed in server.xml:
-
-```
-<application id="com.ibm.cicsdev.springboot.asynchronous-0.1.0" location="${server.config.dir}/springapps/com.ibm.cicsdev.springboot.asynchronous-0.1.0.war" name="com.ibm.cicsdev.springboot.asynchronous-0.1.0" type="war">
-    <application-bnd>
+``` XML
+   <application id="com.ibm.cicsdev.springboot.asynchronous-0.1.0"  
+     location="${server.config.dir}/springapps/com.ibm.cicsdev.springboot.asynchronous-0.1.0.war"  
+     name="com.ibm.cicsdev.springboot.asynchronous-0.1.0" type="war">
+     <application-bnd>
         <security-role name="cicsAllAuthenticated">
             <special-subject type="ALL_AUTHENTICATED_USERS"/>
         </security-role>
-   </application-bnd>
-``` 
+     </application-bnd>  
+   </application>
+```
 
 ## Trying out the sample
 
