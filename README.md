@@ -59,11 +59,26 @@ This creates a WAR file inside the `target` directory.
 
 2. Ensure you have the following features in `server.xml`:
 
-    - servlet-3.1 
+    - servlet-3.1 or servlet-4.0
     - concurrent-1.0 
     - cicsts:security-1.0 
+        
+Notes: With servlet-3.1 and WAR file Tomcat must be exluded, for JAR file it doesn't matter, and for servlet-4.0 it doesn't matter.
 
 3. Copy and paste WAR from build project into a CICS bundle project and create WARbundlepart. Deploy the Spring Boot application by this CICS bundle.
+
+Notes: You also can add the application configuration to server.xml
+
+Here's an example of configuration needed in server.xml:
+
+```
+<application id="com.ibm.cicsdev.springboot.asynchronous-0.1.0" location="${server.config.dir}/springapps/com.ibm.cicsdev.springboot.asynchronous-0.1.0.war" name="com.ibm.cicsdev.springboot.asynchronous-0.1.0" type="war">
+    <application-bnd>
+        <security-role name="cicsAllAuthenticated">
+            <special-subject type="ALL_AUTHENTICATED_USERS"/>
+        </security-role>
+   </application-bnd>
+``` 
 
 ## Trying out the sample
 
