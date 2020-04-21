@@ -86,7 +86,7 @@ This creates a WAR file inside the `target` directory.
 
 1. Find the base URL for the application in the Liberty messages.log e.g.  `http://myzos.mycompany.com:httpPort/com.ibm.cicsdev.springboot.asynchronous-0.1.0`.
 
-2. Past the base URL along with the REST service suffix 'springCICSAsynTest' into the browser  e.g. `http://myzos.mycompany.com:httpPort/com.ibm.cicsdev.springboot.asynchronous-0.1.0/springCICSAsynTest`.  
+2. Past the base URL along with the REST service suffix 'springCICSAsynTest' into the browser  e.g.  `http://myzos.mycompany.com:httpPort/com.ibm.cicsdev.springboot.asynchronous-0.1.0/springCICSAsynTest`.  
 The browser will prompt for basic authentication. Enter a valid userid and password - according to the configured registry for your target Liberty JVM server.
 
 3. If successful, the application will run two methods asynchronously. You can check the output from these asynchronous methods by viewing the TSQ called SPAYCICS (SPring Boot AYsynchronous). One way to achieve this is through the CICS command "CEBR SPAYCICS". You should see two entries:  `"Anne: Hello AsyncService2 from Spring Boot."`  `"Anne: Hello AsyncService1 from Spring Boot."`
