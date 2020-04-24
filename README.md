@@ -63,6 +63,8 @@ This creates a WAR file inside the `target` directory.
     - *servlet-3.1* or *servlet-4.0*
     - *concurrent-1.0*
     - *cicsts:security-1.0*
+    
+   Note: `servlet-4.0` will only work for CICS TS V5.5 or later
                 
 2. Copy and paste the WAR from your *target* or *build/libs* directory into a CICS bundle project and create a new WARbundlepart for that WAR file. 
 
