@@ -3,4 +3,5 @@
 /.gradle/
 /target/
 /.factorypath/
+/bin/
 
