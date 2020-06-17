@@ -28,6 +28,10 @@ import java.lang.reflect.Method;
 
 import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 
+/**
+ * 
+ * This class is to implement AsyncUncaughtExceptionHandler
+ */
 public class AsyncExceptionHandler implements AsyncUncaughtExceptionHandler {
 
     @Override

@@ -40,6 +40,9 @@ public class SpringCICSAsynController {
     @Autowired
     private AsyncService asyncService;
 
+    /**
+     * @return if submit success, it will return information "Anne: Spring Boot with Asynchronous success!" in the web UI.
+     */
     @RequestMapping("/springCICSAsynTest")
     public String submit(){
     	

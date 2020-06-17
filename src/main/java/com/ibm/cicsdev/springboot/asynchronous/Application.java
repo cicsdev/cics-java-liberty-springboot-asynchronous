@@ -54,6 +54,9 @@ public class Application extends SpringBootServletInitializer implements AsyncCo
 		return application.sources(Application.class);
 	}
 
+	/**
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
