@@ -33,7 +33,7 @@ import org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor;
 
 /**
  * 
- * This class is the entry point of the spring boot application which contains @SpringBootApplication annotation and the main method to run the Spring Boot application.
+ * This class is the entry point of the Spring Boot application which contains @SpringBootApplication annotation and the main method to run the Spring Boot application.
  * 
  * A single @SpringBootApplication annotation can be used to enable those three features, that is:
  *
@@ -41,37 +41,38 @@ import org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor;
  *   @ComponentScan: scan all the beans and package declarations when the application initializes.
  *   @Configuration: allow to register extra beans in the context or import additional configuration classes
  * 
- * @EnableAsync(): It can detect @Async annotation
+ *   @EnableAsync(): It can detect @Async annotation
  */
 
 @SpringBootApplication
 @ServletComponentScan
 @EnableAsync()
-public class Application extends SpringBootServletInitializer implements AsyncConfigurer {
-
+public class Application extends SpringBootServletInitializer implements AsyncConfigurer 
+{
 	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) 
+	{
 		return application.sources(Application.class);
 	}
 
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) 
+	{
 		SpringApplication.run(Application.class, args);
 	}
 	
 	@Override
     @Bean(name = "ConTaskExecutor")
-    public Executor getAsyncExecutor() {
-    		  
+    public Executor getAsyncExecutor() 
+	{    		 
     	  return new DefaultManagedTaskExecutor();
-
     }
 
     @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() 
+    {
         return new AsyncExceptionHandler();
-    }
-	
+    }	
 }

@@ -28,59 +28,65 @@ import com.ibm.cics.server.TSQ;
 
 /**
  * 
- * This class uses the annotation @Async() on the application level for those which you want it execution to be in a separate thread. 
+ * This class uses the annotation @Async() at the application level
+ * for those which you want it execution to be in a separate thread. 
  * 
  * Two methods executeAsync1() and executeAsync2() can run in separate threads.
  * 
  */
-
 @Service
 @Async("ConTaskExecutor")
-public class AsyncService {
-
+public class AsyncService 
+{
     private static final Logger logger = LoggerFactory.getLogger(AsyncService.class);
    
     /**
      * executeAsync1, this method will run in a separate thread
      */
-    public void executeAsync1() {
-    	
-        logger.info("Anne: start executeAsync1");
-        try{
+    public void executeAsync1() 
+    {    
+        logger.info("start executeAsync1");
+        
+        try
+        {
         	System.out.println("Anne: Now TSQ writing begin from executeAsync1.");
         	        	        	
         	TSQ tsq = new TSQ();
             tsq.setName("SPAYCICS");
-            tsq.writeString("Anne: Hello AsyncService1 from Spring Boot.");
+            tsq.writeString("Hello AsyncService1 from Spring Boot.");
            
-            System.out.println("Anne: Now TSQ writing end. Please check TSQ SPAYCICS.");
-
-        	      
-        }catch(Exception e){
+            System.out.println("Now TSQ writing end. Please check TSQ SPAYCICS.");        	    
+        }
+        catch(Exception e)
+        {
             e.printStackTrace();
         }
-        logger.info("Anne: end executeAsync1");
+        
+        logger.info("end executeAsync1");
     }
+    
     
     /**
      * executeAsync2, this method will run in another separate thread
      */
-    public void executeAsync2() {
-    	
-        logger.info("Anne: start executeAsync2");
-        try{
-        	System.out.println("Anne: Now TSQ writing begin from executeAsync2.");
+    public void executeAsync2() 
+    {    
+        logger.info("start executeAsync2");
+        try
+        {
+        	System.out.println("Now TSQ writing begin from executeAsync2.");
         	
         	TSQ tsq = new TSQ();
             tsq.setName("SPAYCICS");
-            tsq.writeString("Anne: Hello AsyncService2 from Spring Boot.");
+            tsq.writeString("Hello AsyncService2 from Spring Boot.");
            
-            System.out.println("Anne: Now TSQ writing end. Please check TSQ SPAYCICS.");
-
-        	      
-        }catch(Exception e){
+            System.out.println("Now TSQ writing end. Please check TSQ SPAYCICS.");
+        	     
+        }
+        catch(Exception e)
+        {
             e.printStackTrace();
         }
-        logger.info("Anne: end executeAsync2");
+        logger.info("end executeAsync2");
     }
 }

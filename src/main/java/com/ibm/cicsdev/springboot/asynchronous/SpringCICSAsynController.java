@@ -25,38 +25,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * This class is to write a Rest Endpoint and use the AsyncService class to run two separate tasks.
+ * This class is the Rest Endpoint and uses the AsyncService class to run two separate tasks.
  * 
  * @RestController: build a Restful controller
  * @Autowired: drive Dependency Injection
  * @RequestMapping: write a Request URI method
  */
-
 @RestController
-public class SpringCICSAsynController {
-
+public class SpringCICSAsynController 
+{
     private static final Logger logger = LoggerFactory.getLogger(SpringCICSAsynController.class);
 
     @Autowired
     private AsyncService asyncService;
 
+    
     /**
      * @return if submit success, it will return information "Anne: Spring Boot with Asynchronous success!" in the web UI.
      */
     @RequestMapping("/springCICSAsynTest")
-    public String submit(){
-    	
-        logger.info("Anne: start submit");
-        
-        //Invoke task from service
+    public String submit()
+    {    
+        logger.info("start submit");
+             
         asyncService.executeAsync1();
-        System.out.println("Anne: AsyncService1 is running.");
+        System.out.println("AsyncService1 is running.");
         
         asyncService.executeAsync2();
-        System.out.println("Anne: AsyncService2 is running.");
+        System.out.println("AsyncService2 is running.");
 
-        logger.info("Anne: end submit");
+        logger.info("end submit");
 
-        return "Anne: Spring Boot with Asynchronous success!";
+        return "Spring Boot with Asynchronous success!";
     }
 }

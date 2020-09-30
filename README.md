@@ -133,7 +133,7 @@ This creates a WAR file inside the `target` directory.
 
 2. Copy the context root from message CWWKT0016I along with the REST service suffix 'springCICSAsynTest' into the browser  e.g.  `http://myzos.mycompany.com:httpPort/com.ibm.cicsdev.springboot.asynchronous-0.1.0/springCICSAsynTest`.  
 
-3. If successful, the application will run two methods asynchronously. You can check the output from these asynchronous methods by viewing the TSQ called SPAYCICS (SPring Boot AYsynchronous). One way to achieve this is through the CICS command "CEBR SPAYCICS". You should see two entries:  `"Anne: Hello AsyncService2 from Spring Boot."`  `"Anne: Hello AsyncService1 from Spring Boot."`
+3. If successful, the application will run two methods asynchronously. You can check the output from these asynchronous methods by viewing the TSQ called SPAYCICS (SPring Boot AYsynchronous). One way to achieve this is through the CICS command "CEBR SPAYCICS". You should see two entries:  `"Hello AsyncService2 from Spring Boot."`  `"Hello AsyncService1 from Spring Boot."`
     
 ## License
 This project is licensed under [Apache License Version 2.0](LICENSE). 
