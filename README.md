@@ -129,12 +129,12 @@ This creates a WAR file inside the `target` directory.
 1. Ensure the web application started successfully in Liberty by checking for msg `CWWKT0016I` in the Liberty messages.log:
    
     - `A CWWKT0016I: Web application available (default_host): http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-asynchronous-0.1.0`
-    - `I SRVE0292I: Servlet Message - [com.ibm.cicsdev.springboot.asynchronous-0.1.0]:.Initializing Spring embedded WebApplicationContext`
+    - `I SRVE0292I: Servlet Message - [cics-java-liberty-springboot-asynchronous-0.1.0]:.2 Spring WebApplicationInitializers detected on classpath`
 
-2. Copy the context root from message CWWKT0016I along with the REST service suffix 'springCICSAsynTest' into the browser  e.g.  `http://myzos.mycompany.com:httpPort/com.ibm.cicsdev.springboot.asynchronous-0.1.0/springCICSAsynTest`.  
+2. Copy the context root from message CWWKT0016I along with the REST service suffix 'test' into the browser  e.g.  `http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-asynchronous-0.1.0/test`.  
 
-3. If successful, the application will run two methods asynchronously. You can check the output from these asynchronous methods by viewing the TSQ called SPAYCICS (SPring Boot AYsynchronous). One way to achieve this is through the CICS command "CEBR SPAYCICS". You should see two entries:  `"Hello AsyncService2 from Spring Boot."`  `"Hello AsyncService1 from Spring Boot."`
+3. If successful, the application will spawn 10 asynchronous requests (5 to each of two services). You can check the output from these asynchronous methods by viewing the TSQ called SPRINGTHREADS and/or messages.log. One way to achieve this is through the CICS command "CEBR SPRINGTHREADS". You should see a number of entries (one per thread) for each of the two services (methods) we call:  `"Task <number>: Hello from asynchronous service<no>(<thread>)"`. Although each service is spawned 5 times in round-robin fashion the execute of those services is asynchronous and on separate CICS-enabled threads - so the TSQ writes will be of an unpredictable order.
     
 ## License
-This project is licensed under [Apache License Version 2.0](LICENSE). 
+This project is licensed under [Eclipse Public License - v 2.0](LICENSE). 
      

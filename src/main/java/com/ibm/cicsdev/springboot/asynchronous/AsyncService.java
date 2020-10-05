@@ -1,20 +1,12 @@
-/*
- * Copyright 2012-2019 the original author or authors.
- *
- * Copyright IBM Corp. 2019 All Rights Reserved   
- *  
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/* Licensed Materials - Property of IBM                                   */
+/*                                                                        */
+/* SAMPLE                                                                 */
+/*                                                                        */
+/* (c) Copyright IBM Corp. 2020 All Rights Reserved                       */
+/*                                                                        */
+/* US Government Users Restricted Rights - Use, duplication or disclosure */
+/* restricted by GSA ADP Schedule Contract with IBM Corp                  */
+/*                                                                        */
 
 package com.ibm.cicsdev.springboot.asynchronous;
 
@@ -25,13 +17,12 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.ibm.cics.server.TSQ;
+import com.ibm.cics.server.Task;
 
 /**
  * 
- * This class uses the annotation @Async() at the application level
- * for those which you want it execution to be in a separate thread. 
- * 
- * Two methods executeAsync1() and executeAsync2() can run in separate threads.
+ * This class demonstrates the use of the @Async() annotation at the class level
+ * All public methods in the class will be run on separate threads 
  * 
  */
 @Service
@@ -41,52 +32,46 @@ public class AsyncService
     private static final Logger logger = LoggerFactory.getLogger(AsyncService.class);
    
     /**
-     * executeAsync1, this method will run in a separate thread
+     * executeAsync1, calls to this method will run in separate threads
      */
-    public void executeAsync1() 
+    public void executeAsync1(int instance) 
     {    
-        logger.info("start executeAsync1");
+        logger.info("ExecuteAsync1(" + instance + "): start");
         
         try
-        {
-        	System.out.println("Anne: Now TSQ writing begin from executeAsync1.");
-        	        	        	
+        {        	        	        	       
         	TSQ tsq = new TSQ();
-            tsq.setName("SPAYCICS");
-            tsq.writeString("Hello AsyncService1 from Spring Boot.");
-           
-            System.out.println("Now TSQ writing end. Please check TSQ SPAYCICS.");        	    
+            tsq.setName("SPRINGTHREADS");
+            tsq.writeString("Task " + Task.getTask().getTaskNumber() + ": Hello from asynchronous service1(" + instance + ")");
+            logger.info("ExecuteAsnyc1(" + instance + "): writing to TSQ");
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
         
-        logger.info("end executeAsync1");
+        logger.info("ExecuteAsyc1(" + instance + "): complete. Please check TSQ SPRINGTHREADS.");
     }
     
     
     /**
-     * executeAsync2, this method will run in another separate thread
+     * executeAsync2, calls to this method will run in a separate threads
      */
-    public void executeAsync2() 
+    public void executeAsync2(int instance) 
     {    
-        logger.info("start executeAsync2");
+        logger.info("ExecuteAsync2(" + instance + "): start");
         try
-        {
-        	System.out.println("Now TSQ writing begin from executeAsync2.");
-        	
+        {        	        
         	TSQ tsq = new TSQ();
-            tsq.setName("SPAYCICS");
-            tsq.writeString("Hello AsyncService2 from Spring Boot.");
-           
-            System.out.println("Now TSQ writing end. Please check TSQ SPAYCICS.");
-        	     
+            tsq.setName("SPRINGTHREADS");
+            tsq.writeString("Task " + Task.getTask().getTaskNumber() + ": Hello from asynchronous service2(" + instance + ")");
+            logger.info("ExecuteAsnyc2(" + instance + "): writing to TSQ");
         }
         catch(Exception e)
         {
             e.printStackTrace();
         }
-        logger.info("end executeAsync2");
+        
+        logger.info("ExecuteAsyc2(" + instance + "): complete. Please check TSQ SPRINGTHREADS.");
     }
 }

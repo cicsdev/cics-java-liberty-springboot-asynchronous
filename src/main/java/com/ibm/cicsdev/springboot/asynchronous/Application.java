@@ -1,20 +1,12 @@
-/*
- * Copyright 2012-2019 the original author or authors.
- *
- * Copyright IBM Corp. 2019 All Rights Reserved   
- *  
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/* Licensed Materials - Property of IBM                                   */
+/*                                                                        */
+/* SAMPLE                                                                 */
+/*                                                                        */
+/* (c) Copyright IBM Corp. 2020 All Rights Reserved                       */
+/*                                                                        */
+/* US Government Users Restricted Rights - Use, duplication or disclosure */
+/* restricted by GSA ADP Schedule Contract with IBM Corp                  */
+/*                                                                        */
 
 package com.ibm.cicsdev.springboot.asynchronous;
 
@@ -24,28 +16,30 @@ import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.DefaultManagedTaskExecutor;
 
-/**
- * 
- * This class is the entry point of the Spring Boot application which contains @SpringBootApplication annotation and the main method to run the Spring Boot application.
- * 
- * A single @SpringBootApplication annotation can be used to enable those three features, that is:
- *
- *   @EnableAutoConfiguration: enable Spring Boot’s auto-configuration mechanism
- *   @ComponentScan: scan all the beans and package declarations when the application initializes.
- *   @Configuration: allow to register extra beans in the context or import additional configuration classes
- * 
- *   @EnableAsync(): It can detect @Async annotation
- */
 
+/**
+ * This Application demonstrates the use of the @Asnyc annotation to run methods
+ * on separate threads asynchronously.
+ * 
+ * You must mark the application as eligible for Spring asynchronous operations
+ * with the @EnableAysnc annotation.
+ *
+ * The application must implement the AsnycConfigurer interface and provide 
+ * an implementation of the getAsyncExecutor() and getAsyncUncaughtExceptionHandler()
+ * methods.
+ * 
+ * Ensure you return an instance of the DefaultManagedTaskExecutor in the getAsyncExecutor() 
+ * method as this uses JNDI to lookup the application server's (Liberty) concurrent managed Executor 
+ * to obtains new threads from it. Threads served from that Executor are CICS enabled threads.  
+ *
+ */
 @SpringBootApplication
-@ServletComponentScan
 @EnableAsync()
 public class Application extends SpringBootServletInitializer implements AsyncConfigurer 
 {
@@ -55,19 +49,23 @@ public class Application extends SpringBootServletInitializer implements AsyncCo
 		return application.sources(Application.class);
 	}
 
-	/**
-	 * @param args
-	 */
+	
 	public static void main(String[] args) 
 	{
 		SpringApplication.run(Application.class, args);
 	}
 	
+	
+	// Annotation names the Executor (for use by the AsyncService class)
 	@Override
     @Bean(name = "ConTaskExecutor")
     public Executor getAsyncExecutor() 
 	{    		 
-    	  return new DefaultManagedTaskExecutor();
+		// By default this Spring class will use JNDI to look for a standard Java EE compliant
+		// executor, which in our environment is the Liberty one provided by the concurrent-1.0
+		// feature, this in turn uses Liberty' defaultExecutor that has been modified in a 
+		// CICS environment to return CICS enabled threads.
+    	return new DefaultManagedTaskExecutor();
     }
 
     @Override
