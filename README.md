@@ -1,4 +1,5 @@
 # cics-java-liberty-springboot-asynchronous
+[![Build](https://github.com/SoftlySplinter/cics-java-liberty-springboot-asynchronous/actions/workflows/java.yaml/badge.svg)](https://github.com/SoftlySplinter/cics-java-liberty-springboot-asynchronous/actions/workflows/java.yaml)
 
 This sample project demonstrates a Spring Boot application running asynchronous operations on CICS-enabled threads. It is intended for deployment inside an IBM CICS Liberty JVM server.
 
