@@ -14,27 +14,27 @@ import com.ibm.cics.server.TSQ;
 import com.ibm.cics.server.Task;
 
 /**
- * 
+ *
  * This class demonstrates the use of the @Async() annotation at the class level
- * All public methods in the class will be run on separate threads 
- * 
+ * All public methods in the class will be run on separate threads
+ *
  */
 @Service
 @Async("ConTaskExecutor")
-public class AsyncService 
+public class AsyncService
 {
     private static final Logger logger = LoggerFactory.getLogger(AsyncService.class);
-   
+
     /**
      * executeAsync1, calls to this method will run in separate threads
      */
-    public void executeAsync1(int instance) 
-    {    
+    public void executeAsync1(int instance)
+    {
         logger.info("ExecuteAsync1(" + instance + "): start");
-        
+
         try
-        {        	        	        	       
-        	TSQ tsq = new TSQ();
+        {
+            TSQ tsq = new TSQ();
             tsq.setName("SPRINGTHREADS");
             tsq.writeString("Task " + Task.getTask().getTaskNumber() + ": Hello from asynchronous service1(" + instance + ")");
             logger.info("ExecuteAsnyc1(" + instance + "): writing to TSQ");
@@ -43,20 +43,20 @@ public class AsyncService
         {
             e.printStackTrace();
         }
-        
+
         logger.info("ExecuteAsyc1(" + instance + "): complete. Please check TSQ SPRINGTHREADS.");
     }
-    
-    
+
+
     /**
      * executeAsync2, calls to this method will run in a separate threads
      */
-    public void executeAsync2(int instance) 
-    {    
+    public void executeAsync2(int instance)
+    {
         logger.info("ExecuteAsync2(" + instance + "): start");
         try
-        {        	        
-        	TSQ tsq = new TSQ();
+        {
+            TSQ tsq = new TSQ();
             tsq.setName("SPRINGTHREADS");
             tsq.writeString("Task " + Task.getTask().getTaskNumber() + ": Hello from asynchronous service2(" + instance + ")");
             logger.info("ExecuteAsnyc2(" + instance + "): writing to TSQ");
@@ -65,7 +65,7 @@ public class AsyncService
         {
             e.printStackTrace();
         }
-        
+
         logger.info("ExecuteAsyc2(" + instance + "): complete. Please check TSQ SPRINGTHREADS.");
     }
 }
