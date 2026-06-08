@@ -1,1 +1,10 @@
-rootProject.name = 'com.ibm.cicsdev.springboot.asynchronous'
+// ============================================================================
+// Root Project Configuration
+// ============================================================================
+rootProject.name = 'cics-java-liberty-springboot-asynchronous'
+
+// ============================================================================
+// Subprojects
+// ============================================================================
+include(':cics-java-liberty-springboot-asynchronous-app')
+include(':cics-java-liberty-springboot-asynchronous-cicsbundle')
