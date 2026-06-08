@@ -5,7 +5,7 @@ This sample project demonstrates a Spring Boot application running asynchronous 
 
 ## Prerequisites
 
-  - CICS TS V5.6 or later (required for Java 17 support)
+  - CICS TS V6.1 or later (required for Spring Boot 3.x and Jakarta EE 10 support)
   - A configured Liberty JVM server in CICS
   - Java SE 17 or later on the workstation
   - An Eclipse development environment on the workstation (optional)
@@ -52,7 +52,7 @@ On the command line, you simply swap the Gradle or Maven command for the wrapper
   
 For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* and Maven *m2e* will integrate with the "Run As..." capability, allowing you to specify whether you want to build the project with a Wrapper, or a specific version of your chosen build tool.
 
-The required build-tasks are typically `clean bootWar` for Gradle and `clean package` for Maven. Once run, Gradle will generate a WAR file in the `build/libs` directory, while Maven will generate it in the `target` directory.
+The required build-tasks are typically `clean build` for Gradle and `clean package` for Maven. Once run, Gradle will generate a WAR file in the `cics-java-liberty-springboot-asynchronous-app/build/libs` directory, while Maven will generate it in the `cics-java-liberty-springboot-asynchronous-app/target` directory.
 
 **Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
 
@@ -67,16 +67,16 @@ Run the following in a local command prompt:
 On Linux or Mac:
 
 ```shell
-./gradlew clean bootWar
+./gradlew clean build
 ```
 
 On Windows:
 
 ```shell
-gradlew.bat clean bootWar
+gradlew.bat clean build
 ```
 
-This creates a WAR file inside the `build/libs` directory.
+This creates a WAR file inside the `cics-java-liberty-springboot-asynchronous-app/build/libs` directory.
 
 ### Maven Wrapper (command line)
 
@@ -94,18 +94,16 @@ On Windows:
 mvnw.cmd clean package
 ```
 
-This creates a WAR file inside the `target` directory.
+This creates a WAR file inside the `cics-java-liberty-springboot-asynchronous-app/target` directory.
 
 ## Deploying to a CICS Liberty JVM server
 Ensure you have the following features defined in your Liberty `server.xml`:
 
-- `servlet-3.1` or `servlet-4.0` depending on the version of Java EE in use.
-- `concurrent-1.0`. 
+- `servlet-6.0` (required for Spring Boot 3.x and Jakarta EE 10)
+- `concurrent-3.0`
 - `cicsts:security-1.0` if CICS security is enabled.
   
 A template `server.xml` is provided [here](./etc/config/liberty/server.xml).
-
-> **Note:** `servlet-4.0` will only work for CICS TS V5.5 or later
     
 ### Deploying with CICS bundles
 1. Copy and paste the built WAR from your *target* or *build/libs* directory into a Eclipse CICS bundle project.
