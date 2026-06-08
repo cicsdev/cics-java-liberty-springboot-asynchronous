@@ -5,9 +5,9 @@ permissions:
 
 on:
   push:
-    branches: ["main", "spring-boot-3-modernization"]
+    branches: ["main"]
   pull_request:
-    branches: ["main", "spring-boot-3-modernization"]
+    branches: ["**"]
   schedule:
     - cron: '0 0 * * *'
 
@@ -87,4 +87,21 @@ jobs:
       with:
         gradle-version: 8.14.4
     - name: Execute Gradle build
+      run: gradle bootWar
+
+  build-gradlew:
+    name: Build Gradle Wrapper
+    
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [17, 21, 25]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK ${{ matrix.jdk }}
+      uses: actions/setup-java@v4
+      with:
+        java-version: ${{ matrix.jdk }}
+        distribution: 'semeru'
+    - name: Build with Gradle Wrapper
       run: ./gradlew bootWar
