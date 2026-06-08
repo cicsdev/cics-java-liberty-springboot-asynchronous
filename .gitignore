@@ -1,5 +1,7 @@
-/.gradle/
-/target/
-/build/
-/bin/
+.gradle/
+target/
+build/
+bin/
+*.war
+*.jar
 
