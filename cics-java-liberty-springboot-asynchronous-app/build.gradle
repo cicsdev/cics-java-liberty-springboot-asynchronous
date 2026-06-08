@@ -1,7 +1,7 @@
 plugins
 {
-	id 'org.springframework.boot' version '3.5.14'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.springframework.boot' version '3.5.14'
+    id 'io.spring.dependency-management' version '1.1.7'
 	id 'java'
 	id 'eclipse'
 	id 'idea'
@@ -9,25 +9,12 @@ plugins
 }
 
 group = 'com.ibm.cicsdev.springboot'
-archivesBaseName='cics-java-liberty-springboot-asynchronous'
 version = '0.1.0'
 
-
-// If in Eclipse, add Javadoc to the local project classpath
-eclipse 
+base
 {
-    classpath 
-    {
-        downloadJavadoc = true
-    }
+    archivesName = "cics-java-liberty-springboot-asynchronous"
 }
-
-
-repositories 
-{
-    mavenCentral()
-}
-
 
 
 java
@@ -35,19 +22,34 @@ java
     toolchain
     {
         languageVersion = JavaLanguageVersion.of(java_version)
-        vendor = JvmVendorSpec.IBM
-        implementation = JvmImplementation.J9
     }
 }
 
 
-dependencies 
+// If in Eclipse, add Javadoc to the local project classpath
+eclipse
 {
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    classpath
+    {
+        downloadJavadoc = true
+    }
+}
 
-    // Don't include TomCat in the runtime build, but do put it in WEB-INF so it can be run standalone a well as embedded
+repositories
+{
+    mavenCentral()
+
+}
+
+
+dependencies
+{
+    // Spring Boot web starter for building REST/HTTP endpoints
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    
+    // Tomcat provided by CICS Liberty at runtime
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-  
+    
     // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample)
     // If you are running on a higher CICS TS version, you may replace this with a newer BOM)
     compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856"))
@@ -55,3 +57,6 @@ dependencies
     // JCICS API (version inherited from BOM)
     compileOnly("com.ibm.cics:com.ibm.cics.server")
 }
+
+//Don't generate a FAT bootWar, we don't need to run standalone
+bootWar { enabled = false }
