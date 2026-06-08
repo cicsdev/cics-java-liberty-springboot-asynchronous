@@ -22,13 +22,14 @@
     <maven.compiler.source>${java.version}</maven.compiler.source>
   </properties>
      
-  <!-- CICS TS V5.5 BOM (as of May 2020) -->
+  <!--Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample) -->
+  <!-- If you are running on a higher CICS TS version, you may replace this with a newer BOM) -->
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>com.ibm.cics</groupId>
         <artifactId>com.ibm.cics.ts.bom</artifactId>
-        <version>5.5-20200519131930-PH25409</version>
+        <version>6.1-20250812133513-PH63856</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
