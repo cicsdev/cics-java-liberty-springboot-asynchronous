@@ -48,9 +48,10 @@ dependencies
     // Don't include TomCat in the runtime build, but do put it in WEB-INF so it can be run standalone a well as embedded
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
   
-    // CICS TS V5.5 Maven BOM (as of 19th May 2020)
-    compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:5.5-20200519131930-PH25409")
-      
-    // Don't include JCICS in the final build (no need for version because we have BOM)
-    compileOnly("com.ibm.cics:com.ibm.cics.server")                
+    // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample)
+    // If you are running on a higher CICS TS version, you may replace this with a newer BOM)
+    compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856"))
+    
+    // JCICS API (version inherited from BOM)
+    compileOnly("com.ibm.cics:com.ibm.cics.server")
 }
