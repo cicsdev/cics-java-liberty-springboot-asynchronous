@@ -16,12 +16,11 @@
   <name>cics-java-liberty-springboot-asynchronous</name>
   <description>Demo project for Spring Boot</description>      
   <properties>
-    <java.version>1.8</java.version>
-
+    <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.source>${java.version}</maven.compiler.source>
-  </properties>   
+  </properties>
      
   <!-- CICS TS V5.5 BOM (as of May 2020) -->
   <dependencyManagement>
@@ -61,6 +60,14 @@
   <packaging>war</packaging>
   <build>
     <plugins>
+      <!-- Maven Compiler Plugin with release parameter -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <release>${java.version}</release>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

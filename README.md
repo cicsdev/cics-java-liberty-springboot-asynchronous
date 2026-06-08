@@ -5,9 +5,9 @@ This sample project demonstrates a Spring Boot application running asynchronous 
 
 ## Prerequisites
 
-  - CICS TS V5.3 or later
+  - CICS TS V5.6 or later (required for Java 17 support)
   - A configured Liberty JVM server in CICS
-  - Java SE 1.8 or later on the workstation
+  - Java SE 17 or later on the workstation
   - An Eclipse development environment on the workstation (optional)
   - Either Gradle or Apache Maven on the workstation (optional if using Wrappers)
 
