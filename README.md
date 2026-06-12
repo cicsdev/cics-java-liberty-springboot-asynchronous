@@ -105,7 +105,7 @@ Ensure you have the following features defined in your Liberty `server.xml`:
   
 A template `server.xml` is provided [here](./etc/config/liberty/server.xml).
     
-### Deploying with CICS bundles
+### Deploying with a CICS Bundle Project 
 1. Copy and paste the built WAR from your *target* or *build/libs* directory into a Eclipse CICS bundle project.
 2. Create a new WAR bundlepart that references the WAR file.
 3. Deploy the CICS bundle project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard.
