@@ -52,7 +52,7 @@ On the command line, you simply swap the Gradle or Maven command for the wrapper
   
 For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* and Maven *m2e* will integrate with the "Run As..." capability, allowing you to specify whether you want to build the project with a Wrapper, or a specific version of your chosen build tool.
 
-The required build-tasks are typically `clean build` for Gradle and `clean package` for Maven. Once run, Gradle will generate a WAR file in the `cics-java-liberty-springboot-asynchronous-app/build/libs` directory, while Maven will generate it in the `cics-java-liberty-springboot-asynchronous-app/target` directory.
+The required build-tasks are typically `clean build` for Gradle and `clean verify` for Maven. Once run, Gradle will generate a WAR file in the `cics-java-liberty-springboot-asynchronous-app/build/libs` directory, while Maven will generate it in the `cics-java-liberty-springboot-asynchronous-app/target` directory.
 
 **Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
 
@@ -85,13 +85,13 @@ Run the following in a local command prompt:
 On Linux or Mac:
 
 ```shell
-./mvnw clean package
+./mvnw clean verify
 ```
 
 On Windows:
 
 ```shell
-mvnw.cmd clean package
+mvnw.cmd clean verify
 ```
 
 This creates a WAR file inside the `cics-java-liberty-springboot-asynchronous-app/target` directory.

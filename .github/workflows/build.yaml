@@ -43,7 +43,7 @@ jobs:
           distribution: "semeru"
           cache: maven
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots --file pom.xml package
+        run: mvn --batch-mode --update-snapshots --file pom.xml verify
       - run: mkdir staging && cp target/*.war staging
       - uses: actions/upload-artifact@v4
         with:
@@ -66,7 +66,7 @@ jobs:
           distribution: "semeru"
           cache: maven
       - name: Build with Maven Wrapper
-        run: ./mvnw --batch-mode --update-snapshots package
+        run: ./mvnw --batch-mode --update-snapshots verify
 
   build-gradle:
     name: Build Gradle
@@ -87,7 +87,7 @@ jobs:
       with:
         gradle-version: 8.14.4
     - name: Execute Gradle build
-      run: gradle bootWar
+      run: gradle clean bootWar
 
   build-gradlew:
     name: Build Gradle Wrapper
@@ -104,4 +104,4 @@ jobs:
         java-version: ${{ matrix.jdk }}
         distribution: 'semeru'
     - name: Build with Gradle Wrapper
-      run: ./gradlew bootWar
+      run: ./gradlew clean bootWar
