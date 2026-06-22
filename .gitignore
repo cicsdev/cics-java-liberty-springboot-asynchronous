@@ -1,6 +1,6 @@
 .gradle/
-target/
-build/
+**/target/
+**/build/
 bin/
 *.war
 *.jar
