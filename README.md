@@ -1,15 +1,57 @@
 # cics-java-liberty-springboot-asynchronous
 [![Build](https://github.com/cicsdev/cics-java-liberty-springboot-asynchronous/actions/workflows/build.yaml/badge.svg)](https://github.com/cicsdev/cics-java-liberty-springboot-asynchronous/actions/workflows/build.yaml)
+[![License](https://img.shields.io/badge/License-EPL%202.0-red.svg)](https://www.eclipse.org/legal/epl-2.0/)
 
-This sample project demonstrates a Spring Boot application running asynchronous operations on CICS-enabled threads. It is intended for deployment inside an IBM CICS Liberty JVM server.
+## Overview
 
-## Prerequisites
+This sample provides a Spring Boot application that demonstrates asynchronous operations running on CICS-enabled threads. The sample shows how to use Spring's `@Async` annotation to execute methods asynchronously while maintaining CICS transaction context, making it ideal for deployment inside an IBM CICS Liberty JVM server.
 
-  - CICS TS V6.1 or later (required for Spring Boot 3.x and Jakarta EE 10 support)
-  - A configured Liberty JVM server in CICS
-  - Java SE 17 or later on the workstation
-  - An Eclipse development environment on the workstation (optional)
-  - Either Gradle or Apache Maven on the workstation (optional if using Wrappers)
+## Key Features
+
+- **Asynchronous Execution**: Spring Boot `@Async` annotation for concurrent operations
+- **CICS Thread Management**: Maintains CICS transaction context across async threads
+- **JCICS API Integration**: Uses JCICS to write results to Temporary Storage Queue (TSQ)
+- **Thread Pool Configuration**: Proper configuration for CICS environments
+- **Error Handling**: Examples of exception handling in asynchronous operations
+
+## Table of Contents
+
+- [Overview](#overview)
+- [Key Features](#key-features)
+- [Requirements](#requirements)
+- [Downloading](#downloading)
+- [Building the Sample](#building-the-sample)
+- [Deploying to a CICS Liberty JVM server](#deploying-to-a-cics-liberty-jvm-server)
+- [Running the Sample](#running-the-sample)
+- [License](#license)
+- [Additional Resources](#additional-resources)
+- [Contributing](#contributing)
+
+The sample is structured as a multi-module project with:
+- **cics-java-liberty-springboot-asynchronous-app** - The Spring Boot application module
+- **cics-java-liberty-springboot-asynchronous-cicsbundle** - The CICS bundle module for deployment
+
+---
+
+## Requirements
+
+### Workstation Requirements
+- **Java:** Java SE 17 or later (required for Spring Boot 3.x)
+- **Build Tools:**
+  - **Gradle:** Version 7.3+ (Java 17 support) - Recommended: 8.0+ - included via wrapper
+  - **Maven:** Version 3.8.1+ (Java 17 support) - Recommended: 3.9.0+ - included via wrapper
+- **IDE (Optional):**
+  - Eclipse with IBM CICS SDK for Java EE, Jakarta EE and Liberty
+  - IntelliJ IDEA, VS Code, or any IDE with Gradle/Maven support
+  - Command line (no IDE required if using wrappers)
+
+### z/OS Requirements
+- **CICS TS:** V6.1 or later
+- **WebSphere Liberty:** Included with CICS
+- **Java:** IBM Semeru Runtime 17 or later on z/OS
+- **Jakarta EE:** 10 or later
+
+---
 
 ## Downloading
 
@@ -26,7 +68,7 @@ You can browse the published versions of the CICS BOM at [Maven Central.](https:
  
 Gradle (build.gradle):
 
-`compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856"))`
+`compileOnly enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856")`
 
 Maven (POM.xml):
 
@@ -44,94 +86,180 @@ Maven (POM.xml):
 </dependencyManagement>
 ```
 
-## Building 
+## Building the Sample
 
-You can build the sample using an IDE of your choice, or you can build it from the command line. For both approaches, using the supplied Gradle or Maven wrapper is the recommended way to get a consistent version of build tooling.
+You can build using Gradle, Maven, or Eclipse. The wrappers are pre-configured with compatible versions.
 
-On the command line, you simply swap the Gradle or Maven command for the wrapper equivalent, `gradlew` or `mvnw` respectively.
-  
-For an IDE, taking Eclipse as an example, the plug-ins for Gradle *buildship* and Maven *m2e* will integrate with the "Run As..." capability, allowing you to specify whether you want to build the project with a Wrapper, or a specific version of your chosen build tool.
+### Option 1: Building with Gradle
 
-The required build-tasks are typically `clean build` for Gradle and `clean verify` for Maven. Once run, Gradle will generate a WAR file in the `cics-java-liberty-springboot-asynchronous-app/build/libs` directory, while Maven will generate it in the `cics-java-liberty-springboot-asynchronous-app/target` directory.
+**From the root directory:**
 
-**Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
-
-### Gradle Wrapper (command line)
-
-Run the following in a local command prompt:
-
-On Linux or Mac:
-
-```shell
+Linux/Mac:
+```bash
 ./gradlew clean build
 ```
 
-On Windows:
-
-```shell
+Windows:
+```cmd
 gradlew.bat clean build
 ```
 
-This creates a WAR file inside the `cics-java-liberty-springboot-asynchronous-app/build/libs` directory.
+**Output:**
+- WAR file: `cics-java-liberty-springboot-asynchronous-app/build/libs/cics-java-liberty-springboot-asynchronous-0.1.0.war`
+- CICS bundle ZIP: `cics-java-liberty-springboot-asynchronous-cicsbundle/build/distributions/cics-java-liberty-springboot-asynchronous-cicsbundle-0.1.0.zip`
 
-### Maven Wrapper (command line)
+**Note:**
+- In Eclipse, the `build` directory may be hidden. To view it: Package Explorer → ⋮ menu → Filters → Uncheck "Gradle build folder"
 
-Run the following in a local command prompt:
+---
 
-On Linux or Mac:
+### Option 2: Building with Maven
 
-```shell
+**From the root directory:**
+
+Linux/Mac:
+```bash
 ./mvnw clean verify
 ```
 
-On Windows:
-
-```shell
+Windows:
+```cmd
 mvnw.cmd clean verify
 ```
 
-This creates a WAR file inside the `cics-java-liberty-springboot-asynchronous-app/target` directory.
+**Output:**
+- WAR file: `cics-java-liberty-springboot-asynchronous-app/target/cics-java-liberty-springboot-asynchronous-0.1.0.war`
+- CICS bundle ZIP: `cics-java-liberty-springboot-asynchronous-cicsbundle/target/cics-java-liberty-springboot-asynchronous-cicsbundle-0.1.0.zip`
+
+---
+
+### Option 3: Building with Eclipse
+
+1. Import the project into Eclipse (File → Import → Existing Projects)
+2. Right-click on the root project
+3. Select either:
+   - **Gradle → Refresh Gradle Project** then **Run As → Gradle Build** (specify `clean build`)
+   - **Maven → Update Project** then **Run As → Maven build** (specify `clean verify`)
+
+**Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
+
+---
 
 ## Deploying to a CICS Liberty JVM server
+
 Ensure you have the following features defined in your Liberty `server.xml`:
 
 - `servlet-6.0` (required for Spring Boot 3.x and Jakarta EE 10)
 - `concurrent-3.0`
-- `cicsts:security-1.0` if CICS security is enabled.
+- `cicsts:security-1.0` if CICS security is enabled
   
 A template `server.xml` is provided [here](./etc/config/liberty/server.xml).
-    
-### Deploying with a CICS Bundle Project 
-1. Copy and paste the built WAR from your *target* or *build/libs* directory into a Eclipse CICS bundle project.
-2. Create a new WAR bundlepart that references the WAR file.
-3. Deploy the CICS bundle project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard.
 
-### Deploying with Liberty configuration
-1. Manually upload the WAR file to zFS 
-2. Add an `<application>` element to the Liberty server.xml to define the web application with access to all authenticated users. For example the following application element can be used to install a WAR, and grant access to all authenticated users if security is enabled:
+---
 
-  ```xml
-  <application id="cics-java-liberty-springboot-asynchronous-0.1.0"
-      location="${server.config.dir}/springapps/cics-java-liberty-springboot-asynchronous-0.1.0.war"
-      name="cics-java-liberty-springboot-asynchronous-0.1.0" type="war">
-      <application-bnd>
-          <security-role name="cicsAllAuthenticated">
-              <special-subject type="ALL_AUTHENTICATED_USERS"/>
-          </security-role>
-      </application-bnd>
-  </application>
-  ```
+### Method 1: CICS Bundle Plugin Deployment (Recommended)
+
+This method uses the cics-bundle-gradle-plugin or cics-bundle-maven-plugin to automatically generate a CICS bundle.
+
+**Configure your JVM server name:**
+
+Gradle (`cics-java-liberty-springboot-asynchronous-cicsbundle/build.gradle`):
+```gradle
+cics.jvmserver = 'YOUR_JVMSERVER_NAME'  // e.g., 'DFHWLP'
+```
+
+Maven (`cics-java-liberty-springboot-asynchronous-cicsbundle/pom.xml`):
+```xml
+<cics.jvmserver>YOUR_JVMSERVER_NAME</cics.jvmserver>  <!-- e.g., DFHWLP -->
+```
+
+**Deploy the bundle:**
+
+1. Upload the CICS bundle ZIP file to zFS:
+   - Gradle: `cics-java-liberty-springboot-asynchronous-cicsbundle/build/distributions/cics-java-liberty-springboot-asynchronous-cicsbundle-0.1.0.zip`
+   - Maven: `cics-java-liberty-springboot-asynchronous-cicsbundle/target/cics-java-liberty-springboot-asynchronous-cicsbundle-0.1.0.zip`
+
+2. Unzip the bundle on zFS
+
+3. Create a CICS BUNDLE resource definition:
+   ```
+   CEDA DEFINE BUNDLE(ASYNCAPP) GROUP(MYGROUP) BUNDLEDIR(/path/to/bundle)
+   ```
+
+4. Install the bundle:
+   ```
+   CEDA INSTALL BUNDLE(ASYNCAPP) GROUP(MYGROUP)
+   ```
+
+---
+
+### Method 2: CICS Explorer SDK Deployment
+
+1. Copy the built WAR from your *target* or *build/libs* directory into an Eclipse CICS Bundle Project
+2. Create a new WAR bundlepart that references the WAR file
+3. Deploy the CICS Bundle Project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard
+
+---
+
+### Method 3: Direct Liberty Application Deployment
+
+Manually upload the WAR file to zFS and add an `<application>` element to the Liberty server.xml:
+
+```xml
+<application id="cics-java-liberty-springboot-asynchronous-0.1.0"
+    location="${server.config.dir}/springapps/cics-java-liberty-springboot-asynchronous-0.1.0.war"
+    name="cics-java-liberty-springboot-asynchronous-0.1.0" type="war">
+    <application-bnd>
+        <security-role name="cicsAllAuthenticated">
+            <special-subject type="ALL_AUTHENTICATED_USERS"/>
+        </security-role>
+    </application-bnd>
+</application>
+```
+
+---
 
 ## Running the Sample
-1. Ensure the web application started successfully in Liberty by checking for msg `CWWKT0016I` in the Liberty messages.log:
-   - `A CWWKT0016I: Web application available (default_host): http://zos.example.com:9080/cics-java-liberty-springboot-asynchronous-0.1.0`
-   - `I SRVE0292I: Servlet Message - [cics-java-liberty-springboot-asynchronous-0.1.0]:.2 Spring WebApplicationInitializers detected on classpath`
 
-2. Copy the context root from message CWWKT0016I along with the REST service suffix 'test' into the browser e.g. `http://zos.example.com:9080/cics-java-liberty-springboot-asynchronous-0.1.0/test`.
+### Testing the Application
 
-3. If successful, the application will spawn 10 asynchronous requests (5 to each of two services). You can check the output from these asynchronous methods by viewing the TSQ called SPRINGTHREADS and/or messages.log. One way to achieve this is through the CICS command "CEBR SPRINGTHREADS".
-   You should see a number of entries (one per thread) for each of the two services (methods) we call: `"Task <number>: Hello from asynchronous service<no>(<thread>)"`. Although each service is spawned 5 times in round-robin fashion the execution of those services is asynchronous and on separate CICS-enabled threads - so the TSQ writes will be of an unpredictable order.
+1. **Verify Deployment:**
+   
+   Ensure the web application started successfully in Liberty by checking for msg `CWWKT0016I` in the Liberty messages.log:
+   ```
+   CWWKT0016I: Web application available (default_host): http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-asynchronous-0.1.0
+   SRVE0292I: Servlet Message - [cics-java-liberty-springboot-asynchronous-0.1.0]:.2 Spring WebApplicationInitializers detected on classpath
+   ```
+
+2. **Trigger Asynchronous Operations:**
+   
+   Access the test endpoint:
+   ```
+   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-asynchronous-0.1.0/test
+   ```
+
+3. **Verify Results:**
+   
+   The application will spawn 10 asynchronous requests (5 to each of two services). Check the output by:
+   - Viewing the TSQ called `SPRINGTHREADS` using the CICS command: `CEBR SPRINGTHREADS`
+   - Checking Liberty messages.log
+   
+   You should see entries like: `"Task <number>: Hello from asynchronous service<no>(<thread>)"`
+   
+   Although each service is spawned 5 times in round-robin fashion, the execution is asynchronous on separate CICS-enabled threads, so the TSQ writes will be in unpredictable order.
+
+---
 
 ## License
+This project is licensed under [Eclipse Public License - v 2.0](LICENSE).
 
-This project is licensed under [Eclipse Public License - v 2.0](LICENSE). 
+## Additional Resources
+
+- [CICS TS for z/OS Documentation](https://www.ibm.com/docs/en/cics-ts)
+- [Spring Framework Async Documentation](https://docs.spring.io/spring-framework/reference/integration/scheduling.html)
+- [CICS Java Development](https://www.ibm.com/docs/en/cics-ts/latest?topic=programming-java-applications)
+- [Spring Boot Documentation](https://spring.io/projects/spring-boot)
+
+## Contributing
+
+Contributions are welcome! Please read our [contributing guidelines](https://github.com/cicsdev/.github/blob/main/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
