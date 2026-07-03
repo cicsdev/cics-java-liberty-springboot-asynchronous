@@ -105,7 +105,7 @@ gradlew.bat clean build
 ```
 
 **Output:**
-- WAR file: `cics-java-liberty-springboot-asynchronous-app/build/libs/cics-java-liberty-springboot-asynchronous-0.1.0.war`
+- WAR file: `cics-java-liberty-springboot-asynchronous-app/build/libs/cics-java-liberty-springboot-asynchronous.war`
 - CICS bundle ZIP: `cics-java-liberty-springboot-asynchronous-cicsbundle/build/distributions/cics-java-liberty-springboot-asynchronous-cicsbundle-0.1.0.zip`
 
 **Note:**
@@ -128,7 +128,7 @@ mvnw.cmd clean verify
 ```
 
 **Output:**
-- WAR file: `cics-java-liberty-springboot-asynchronous-app/target/cics-java-liberty-springboot-asynchronous-0.1.0.war`
+- WAR file: `cics-java-liberty-springboot-asynchronous-app/target/cics-java-liberty-springboot-asynchronous.war`
 - CICS bundle ZIP: `cics-java-liberty-springboot-asynchronous-cicsbundle/target/cics-java-liberty-springboot-asynchronous-cicsbundle-0.1.0.zip`
 
 ---
@@ -206,9 +206,9 @@ Maven (`cics-java-liberty-springboot-asynchronous-cicsbundle/pom.xml`):
 Manually upload the WAR file to zFS and add an `<application>` element to the Liberty server.xml:
 
 ```xml
-<application id="cics-java-liberty-springboot-asynchronous-0.1.0"
-    location="${server.config.dir}/springapps/cics-java-liberty-springboot-asynchronous-0.1.0.war"
-    name="cics-java-liberty-springboot-asynchronous-0.1.0" type="war">
+<application id="cics-java-liberty-springboot-asynchronous"
+    location="${server.config.dir}/springapps/cics-java-liberty-springboot-asynchronous.war"
+    name="cics-java-liberty-springboot-asynchronous" type="war">
     <application-bnd>
         <security-role name="cicsAllAuthenticated">
             <special-subject type="ALL_AUTHENTICATED_USERS"/>
@@ -227,15 +227,15 @@ Manually upload the WAR file to zFS and add an `<application>` element to the Li
    
    Ensure the web application started successfully in Liberty by checking for msg `CWWKT0016I` in the Liberty messages.log:
    ```
-   CWWKT0016I: Web application available (default_host): http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-asynchronous-0.1.0
-   SRVE0292I: Servlet Message - [cics-java-liberty-springboot-asynchronous-0.1.0]:.2 Spring WebApplicationInitializers detected on classpath
+   CWWKT0016I: Web application available (default_host): http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-asynchronous
+   SRVE0292I: Servlet Message - [cics-java-liberty-springboot-asynchronous]:.2 Spring WebApplicationInitializers detected on classpath
    ```
 
 2. **Trigger Asynchronous Operations:**
    
    Access the test endpoint:
    ```
-   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-asynchronous-0.1.0/test
+   http://myzos.mycompany.com:httpPort/cics-java-liberty-springboot-asynchronous/test
    ```
 
 3. **Verify Results:**
