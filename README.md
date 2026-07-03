@@ -198,8 +198,8 @@ Maven (`cics-java-liberty-springboot-asynchronous-cicsbundle/pom.xml`):
 
 This repository includes a pre-configured Eclipse CICS bundle project `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse` that can be used directly with CICS Explorer SDK.
 
-1. Import the project into Eclipse: **File → Import → General → Existing Projects into Workspace**, browse to the repository root, tick **Search for nested projects**, and select `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse`
-2. Right-click the project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
+1. In the Eclipse **Project Explorer**, right-click the `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse` folder → **Import as Project**
+2. Right-click the imported project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
 
 ---
 
