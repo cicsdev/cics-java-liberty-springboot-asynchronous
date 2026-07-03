@@ -29,7 +29,8 @@ This sample provides a Spring Boot application that demonstrates asynchronous op
 
 The sample is structured as a multi-module project with:
 - **cics-java-liberty-springboot-asynchronous-app** - The Spring Boot application module
-- **cics-java-liberty-springboot-asynchronous-cicsbundle** - The CICS bundle module for deployment
+- **cics-java-liberty-springboot-asynchronous-cicsbundle** - The CICS bundle module for Gradle/Maven deployment
+- **cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse** - The Eclipse CICS bundle project for deployment via CICS Explorer SDK
 
 ---
 
@@ -195,9 +196,10 @@ Maven (`cics-java-liberty-springboot-asynchronous-cicsbundle/pom.xml`):
 
 ### Method 2: CICS Explorer SDK Deployment
 
-1. Copy the built WAR from your *target* or *build/libs* directory into an Eclipse CICS Bundle Project
-2. Create a new WAR bundlepart that references the WAR file
-3. Deploy the CICS Bundle Project from CICS Explorer using the **Export Bundle Project to z/OS UNIX File System** wizard
+This repository includes a pre-configured Eclipse CICS bundle project `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse` that can be used directly with CICS Explorer SDK.
+
+1. Import the project into Eclipse: **File → Import → General → Existing Projects into Workspace**, browse to the repository root, tick **Search for nested projects**, and select `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse`
+2. Right-click the project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
 
 ---
 
