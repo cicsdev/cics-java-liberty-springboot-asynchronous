@@ -198,8 +198,11 @@ Maven (`cics-java-liberty-springboot-asynchronous-cicsbundle/pom.xml`):
 
 This repository includes a pre-configured Eclipse CICS bundle project `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse` that can be used directly with CICS Explorer SDK.
 
-1. In the Eclipse **Project Explorer**, right-click the `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse` folder → **Import as Project**
-2. Right-click the imported project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
+> **Important:** You must build the WAR file first using Gradle or Maven (see [Building the Sample](#building-the-sample)) before exporting. The Eclipse export packages the built WAR into the CICS bundle — without a prior build, Spring Boot dependencies will be missing and the application will not start.
+
+1. Build the WAR: `./gradlew clean build` or `./mvnw clean verify`
+2. In the Eclipse **Project Explorer**, right-click the `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse` folder → **Import as Project**
+3. Right-click the imported project → **Export Bundle Project to z/OS UNIX File System** and follow the wizard
 
 ---
 
