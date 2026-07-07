@@ -59,7 +59,7 @@ The sample is structured as a multi-module project with:
 - Clone the repository using your IDEs support, such as the Eclipse Git plugin
 - **or**, download the sample as a [ZIP](https://github.com/cicsdev/cics-java-liberty-springboot-asynchronous/archive/main.zip) and unzip onto the workstation
 
->*Tip: Eclipse Git provides an 'Import existing Projects' check-box when cloning a repository.*
+>*Tip: Eclipse Git provides an 'Import existing Projects' check-box when cloning a repository. This imports the root project; run a Gradle or Maven refresh afterwards to discover the `-app` and `-cicsbundle` modules. The `-cicsbundle-eclipse` project must be imported separately — see [CICS Explorer SDK Deployment](#method-2-cics-explorer-sdk-deployment).*
 
 ### Check dependencies
  
@@ -136,11 +136,13 @@ mvnw.cmd clean verify
 
 ### Option 3: Building with Eclipse
 
-1. Import the project into Eclipse (**File → Import → General → Existing Projects into Workspace**, tick **Search for nested projects**)
-2. Right-click on the root project
-3. Select either:
-   - **Gradle → Refresh Gradle Project** then **Run As → Gradle Build** (specify `clean build`)
-   - **Maven → Update Project** then **Run As → Maven build** (specify `clean verify`)
+1. Import the root project into Eclipse (**File → Import → General → Existing Projects into Workspace**, select the repository root directory)
+2. Right-click the root project and select either:
+   - **Gradle → Refresh Gradle Project** — this discovers the `-app` and `-cicsbundle` subprojects
+   - **Maven → Update Project** — this discovers the `-app` and `-cicsbundle` subprojects
+3. Build using **Run As → Gradle Build** (specify `clean build`) or **Run As → Maven build** (specify `clean verify`)
+
+> **Note:** The `-cicsbundle-eclipse` project is a standalone Eclipse project not managed by Gradle or Maven. Import it separately by right-clicking the `cics-java-liberty-springboot-asynchronous-cicsbundle-eclipse` folder in the **Project Explorer** → **Import as Project**.
 
 **Note:** When building a WAR file for deployment to Liberty it is good practice to exclude Tomcat from the final runtime artifact. We demonstrate this in the pom.xml with the *provided* scope, and in build.gradle with the *providedRuntime()* dependency.
 
