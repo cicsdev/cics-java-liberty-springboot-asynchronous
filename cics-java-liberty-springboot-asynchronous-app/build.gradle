@@ -1,0 +1,62 @@
+plugins
+{
+    id 'org.springframework.boot' version '3.5.16'
+    id 'io.spring.dependency-management' version '1.1.7'
+	id 'java'
+	id 'eclipse'
+	id 'idea'
+	id 'war'
+}
+
+group = 'com.ibm.cicsdev.springboot'
+version = '0.1.0'
+
+war
+{
+    archiveFileName = 'cics-java-liberty-springboot-asynchronous.war'
+}
+
+
+java
+{
+    toolchain
+    {
+        languageVersion = JavaLanguageVersion.of(java_version)
+    }
+}
+
+
+// If in Eclipse, add Javadoc to the local project classpath
+eclipse
+{
+    classpath
+    {
+        downloadJavadoc = true
+    }
+}
+
+repositories
+{
+    mavenCentral()
+
+}
+
+
+dependencies
+{
+    // Spring Boot web starter for building REST/HTTP endpoints
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    
+    // Tomcat provided by CICS Liberty at runtime
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    
+    // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample)
+    // If you are running on a higher CICS TS version, you may replace this with a newer BOM)
+    compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856"))
+    
+    // JCICS API (version inherited from BOM)
+    compileOnly("com.ibm.cics:com.ibm.cics.server")
+}
+
+//Don't generate a FAT bootWar, we don't need to run standalone
+bootWar { enabled = false }

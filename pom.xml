@@ -6,87 +6,48 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.0</version>
+    <version>3.5.16</version>
+    <relativePath/>
   </parent>
-  
+
   <!-- Application properties -->
   <groupId>com.ibm.cicsdev.springboot</groupId>
   <artifactId>cics-java-liberty-springboot-asynchronous</artifactId>
   <version>0.1.0</version>
-  <name>cics-java-liberty-springboot-asynchronous</name>
-  <description>Demo project for Spring Boot</description>      
+  <packaging>pom</packaging>
+  <description>Demo project for Spring Boot Asynchronous</description>
+  
   <properties>
-    <java.version>1.8</java.version>
-
+    <java.version>17</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.source>${java.version}</maven.compiler.source>
-  </properties>   
-     
-  <!-- CICS TS V5.5 BOM (as of May 2020) -->
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>com.ibm.cics</groupId>
-        <artifactId>com.ibm.cics.ts.bom</artifactId>
-        <version>5.5-20200519131930-PH25409</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <dependencies>  
-    <!-- Compile against, but don't include JCICS in the final build (version and scope are from BOM) -->
-    <dependency>
-      <groupId>com.ibm.cics</groupId>
-      <artifactId>com.ibm.cics.server</artifactId>
-    </dependency>
+    <cics.jvmserver>DFHWLP</cics.jvmserver>
+  </properties>
    
-    <!-- Spring Boot web support -->   
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency> 
-   
-    <!-- Don't include TomCat in the runtime build, but do put it in WEB-INF so it can be run standalone a well as embedded --> 
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-tomcat</artifactId>
-      <scope>provided</scope>
-    </dependency>
-  </dependencies>
-  
-  <!-- Package as an executable war (default is jar) -->
-  <packaging>war</packaging>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
+   <!-- ================================================================ -->
+    <!-- Modules                                                          -->
+    <!-- ================================================================ -->
+    <modules>
+        <module>cics-java-liberty-springboot-asynchronous-app</module>
+        <module>cics-java-liberty-springboot-asynchronous-cicsbundle</module>
+    </modules>
 
-
-    <!-- 
-    Publishes artifacts to here if the deploy goal is used. 
-
-    The values here can be passed on the maven command line
-    using the -D flag syntax 
-  
-    for example:
-    -Dpublish_repo_snapshots_name=my-repo 
-    -->
-    <distributionManagement>
-        <snapshotRepository>
-            <id>${publish_repo_snapshots_name}</id>
-            <url>${publish_repo_snapshots_url}</url>
-        </snapshotRepository>
-        <repository>
-            <id>${publish_repo_releases_name}</id>
-            <url>${publish_repo_releases_url}</url>
-        </repository>
-    </distributionManagement>
+    <!-- ================================================================ -->
+    <!-- Build Configuration                                              -->
+    <!-- ================================================================ -->
+    <build>
+        <plugins>
+            <!-- Maven Compiler Plugin with Toolchain Support -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <release>${java.version}</release>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
+
