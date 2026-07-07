@@ -136,7 +136,7 @@ mvnw.cmd clean verify
 
 ### Option 3: Building with Eclipse
 
-1. Import the project into Eclipse (File → Import → Existing Projects)
+1. Import the project into Eclipse (**File → Import → General → Existing Projects into Workspace**, tick **Search for nested projects**)
 2. Right-click on the root project
 3. Select either:
    - **Gradle → Refresh Gradle Project** then **Run As → Gradle Build** (specify `clean build`)
