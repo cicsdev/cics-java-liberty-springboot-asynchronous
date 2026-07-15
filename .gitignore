@@ -4,6 +4,7 @@
 bin/
 *.war
 *.jar
+.mvn/wrapper/maven-wrapper.jar
 
 # Avoid ignoring Gradle wrapper jar and properties (needed for wrapper to work)
 !gradle-wrapper.jar
