@@ -63,7 +63,7 @@ dependencies
     
     // Use correct BOM version for CICS TS (6.1 is the minimum supported release for this sample)
     // If you are running on a higher CICS TS version, you may replace this with a newer BOM)
-    compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:6.1-20250812133513-PH63856"))
+    compileOnly(enforcedPlatform("com.ibm.cics:com.ibm.cics.ts.bom:${project.property('cics.bom.version')}"))
     
     // JCICS API (version inherited from BOM)
     compileOnly("com.ibm.cics:com.ibm.cics.server")
