@@ -5,9 +5,9 @@ permissions:
 
 on:
   push:
-    branches: ["springboot/v3"]
+    branches: ["springboot/v4"]
   pull_request:
-    branches: ["springboot/v3"]
+    branches: ["springboot/v4"]
 
 jobs:
   check-copyright:
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [17, 21, 25]
+        jdk: [21, 25]
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK ${{ matrix.jdk }}
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [17, 21, 25]
+        jdk: [21, 25]
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK ${{ matrix.jdk }}
@@ -65,11 +65,11 @@ jobs:
 
   build-gradle:
     name: Build Gradle
-
+    
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [17, 21, 25]
+        jdk: [21, 25]
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK ${{ matrix.jdk }}
@@ -84,14 +84,14 @@ jobs:
         gradle-version: 8.14.4
     - name: Build with Gradle
       run: gradle clean build -Pjava_version=${{ matrix.jdk }}
-
+      
   build-gradlew:
     name: Build Gradle Wrapper
-
+    
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [17, 21, 25]
+        jdk: [21, 25]
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK ${{ matrix.jdk }}
