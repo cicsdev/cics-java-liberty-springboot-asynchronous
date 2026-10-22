@@ -52,7 +52,11 @@ public class RESTControllerAsync
                 + "<head><title>Spring Boot Async Sample</title></head>"
                 + "<body>"
                 + "<h1>Spring Boot Async Sample</h1>"
-                + "<p>Successfully spawned asynchronous operations (CICS Version: " + cicsVersion + ", Spring Boot Version: " + springBootVersion + "), see messages.log for results.</p>"
+                + "<p>Successfully spawned asynchronous operations, see messages.log for results.</p>"
+                + "<p>"
+                + "CICS Version: " + cicsVersion + "<br/>"
+                + "Spring Boot Version: " + springBootVersion
+                + "</p>"
                 + "</body>"
                 + "</html>";
     }
