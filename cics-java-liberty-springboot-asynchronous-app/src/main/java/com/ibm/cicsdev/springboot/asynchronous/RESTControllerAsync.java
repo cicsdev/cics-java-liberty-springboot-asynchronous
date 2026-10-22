@@ -7,6 +7,7 @@ package com.ibm.cicsdev.springboot.asynchronous;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringBootVersion;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,9 @@ public class RESTControllerAsync
             logger.info("Spawned asynchronous Service 2, instance " + i);
         }
 
-        return "Successfully spawned asynchronous operations, see messages.log for results.";
+        String cicsVersion = System.getProperty("com.ibm.cics.jvmserver.cics.version", System.getProperty("com.ibm.cics.jvmserver.cics.release", "Unknown"));
+        String springBootVersion = SpringBootVersion.getVersion();
+
+        return "Successfully spawned asynchronous operations (CICS Version: " + cicsVersion + ", Spring Boot Version: " + springBootVersion + "), see messages.log for results.";
     }
 }
