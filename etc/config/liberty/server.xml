@@ -5,7 +5,7 @@
         <!-- Required for Spring Boot 4.x and Jakarta EE 11 -->
         <feature>servlet-6.1</feature>
         <!-- Required for Spring @Async with CICS-enabled threads -->
-        <feature>concurrent-3.0</feature>
+        <feature>concurrent-3.1</feature>
     </featureManager>
 
 </server>

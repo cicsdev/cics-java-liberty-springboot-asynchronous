@@ -148,7 +148,7 @@ This creates a WAR file inside the `cics-java-liberty-springboot-asynchronous-ap
 Ensure you have the following features defined in your Liberty `server.xml`:
 
 - `servlet-6.1` (required for Spring Boot 4.x and Jakarta EE 11)
-- `concurrent-3.0` (required for Spring `@Async` thread pool support)
+- `concurrent-3.1` (required for Spring `@Async` thread pool support)
 
 A template `server.xml` is provided [here](./etc/config/liberty/server.xml).
 
@@ -240,7 +240,7 @@ This repository includes a pre-configured Eclipse CICS bundle project `cics-java
 ## Troubleshooting
 
 **Asynchronous tasks do not appear to run on CICS threads**
-- Ensure `concurrent-3.0` is enabled in your Liberty `server.xml`. Without it, Spring's `@Async` thread pool is not CICS-aware and tasks may not have access to the CICS transaction context.
+- Ensure `concurrent-3.1` is enabled in your Liberty `server.xml`. Without it, Spring's `@Async` thread pool is not CICS-aware and tasks may not have access to the CICS transaction context.
 
 **Application fails to start — `CWWKZ0013E`**
 - Verify `servlet-6.1` is enabled in your Liberty `server.xml`.

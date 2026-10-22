@@ -55,8 +55,8 @@ public class Application extends SpringBootServletInitializer implements AsyncCo
     @Bean(name = "ConTaskExecutor")
     public Executor getAsyncExecutor()
     {
-        // By default this Spring class will use JNDI to look for a standard Java EE compliant
-        // executor, which in our environment is the Liberty one provided by the concurrent-1.0
+        // By default this Spring class will use JNDI to look for a standard Jakarta EE compliant
+        // executor, which in our environment is the Liberty one provided by the concurrent-3.1
         // feature, this in turn uses Liberty' defaultExecutor that has been modified in a
         // CICS environment to return CICS enabled threads.
         return new DefaultManagedTaskExecutor();
