@@ -11,6 +11,7 @@
         <groupId>com.ibm.cicsdev.springboot</groupId>
         <artifactId>cics-java-liberty-springboot-asynchronous</artifactId>
         <version>0.1.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <!-- ================================================================ -->
