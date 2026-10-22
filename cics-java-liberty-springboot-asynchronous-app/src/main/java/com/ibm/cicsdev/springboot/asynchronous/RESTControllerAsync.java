@@ -48,6 +48,12 @@ public class RESTControllerAsync
         String cicsVersion = System.getProperty("com.ibm.cics.jvmserver.cics.version", System.getProperty("com.ibm.cics.jvmserver.cics.release", "Unknown"));
         String springBootVersion = SpringBootVersion.getVersion();
 
-        return "Successfully spawned asynchronous operations (CICS Version: " + cicsVersion + ", Spring Boot Version: " + springBootVersion + "), see messages.log for results.";
+        return "<html>"
+                + "<head><title>Spring Boot Async Sample</title></head>"
+                + "<body>"
+                + "<h1>Spring Boot Async Sample</h1>"
+                + "<p>Successfully spawned asynchronous operations (CICS Version: " + cicsVersion + ", Spring Boot Version: " + springBootVersion + "), see messages.log for results.</p>"
+                + "</body>"
+                + "</html>";
     }
 }
