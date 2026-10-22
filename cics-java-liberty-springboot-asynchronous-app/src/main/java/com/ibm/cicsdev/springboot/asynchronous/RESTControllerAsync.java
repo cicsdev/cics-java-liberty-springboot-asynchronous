@@ -45,19 +45,25 @@ public class RESTControllerAsync
             logger.info("Spawned asynchronous Service 2, instance " + i);
         }
 
-        String cicsVersion = System.getProperty("com.ibm.cics.jvmserver.cics.version", System.getProperty("com.ibm.cics.jvmserver.cics.release", "Unknown"));
-        String springBootVersion = SpringBootVersion.getVersion();
+        String bootVersion = SpringBootVersion.getVersion();
+        String versionDisplay = (bootVersion != null) ? bootVersion : "unknown";
 
-        return "<html>"
-                + "<head><title>Spring Boot Async Sample</title></head>"
-                + "<body>"
-                + "<h1>Spring Boot Async Sample</h1>"
-                + "<p>Successfully spawned asynchronous operations, see messages.log for results.</p>"
-                + "<p>"
-                + "CICS Version: " + cicsVersion + "<br/>"
-                + "Spring Boot Version: " + springBootVersion
-                + "</p>"
-                + "</body>"
-                + "</html>";
+        String cicsVersion = System.getProperty("com.ibm.cics.jvmserver.cics.product.version");
+        if (cicsVersion == null || cicsVersion.isEmpty())
+        {
+            try
+            {
+                cicsVersion = com.ibm.cics.server.API.getCICSServerApiVersion().toString();
+            }
+            catch (Throwable t)
+            {
+                cicsVersion = "unknown";
+            }
+        }
+
+        return "<h1>Spring Boot Async Sample</h1>"
+                + "<p><b>Spring Boot version:</b> " + versionDisplay + "</p>"
+                + "<p><b>CICS version:</b> " + cicsVersion + "</p>"
+                + "<p>Successfully spawned asynchronous operations, see messages.log for results.</p>";
     }
 }
